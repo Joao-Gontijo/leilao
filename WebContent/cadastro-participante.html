@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+	<form action="participantes" method="post">
+		<p>Nome <input type="text" id="input-nome" name="input-nome" size="30" /></p>
+		<p>CPF <input type="text" id="input-cpf" name="input-cpf" size="70" /></p>
+		<p>Data Nascimento <input type="date"  id="input-dataNascimento" name="input-dataNascimento" size="70" /></p>
+		<p><input type="submit" name="btn-salva" value="salvar" /></p>
+
+	</form>
+</body>
+
+<script type="text/javascript">
+	const searchParams = new URLSearchParams(location.search);
+	
+	if(searchParams.get('cpf')){
+		
+		var ajax = new XMLHttpRequest();
+		ajax.onreadystatechange = function(){
+			if(this.readyState == 4 && this.status == 200){
+				var participante = JSON.parse(ajax.responseText);
+				carregaDadosParticipante(participante);
+			}
+		};
+		ajax.open("GET", "participantes?cpf=" + searchParams.get('cpf') 
+				+ "&origem=cadastro-participante", true);
+		ajax.send();				
+	}
+	
+	function carregaDadosParticipante(participante){
+		inputNome = document.querySelector('#input-nome');
+		inputCpf = document.querySelector('#input-cpf');
+		inputDataNascimento = document.querySelector('#input-dataNascimento');
+		
+		inputNome.value = participante.nome;
+		inputCpf.value = participante.cpf;
+		inputDataNascimento.value = participante.dataNascimento;
+	}
+</script>
+</html>

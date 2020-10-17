@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+	<input type="button" value="buscar" onclick="requisicaoAjax()" />
+	<div>
+		<table>
+			<thead>
+				<tr>
+					<th>Nome</th>
+					<th>CPF</th>
+					<th>Data de Nascimento</th>
+				</tr>
+			</thead>
+
+			<tbody id="tbl-participantes">
+
+			</tbody>
+		</table>
+	</div>
+</body>
+
+<script>
+	var tabela = document.querySelector("#tbl-participantes");
+
+	function requisicaoAjax() {
+		var ajax = new XMLHttpRequest();
+		ajax.responseType="text";
+		ajax.onreadystatechange = function() {
+			if (this.readyState == 4 && this.status == 200) {
+				var participantes = JSON.parse(ajax.responseText);
+				atualizaTabela(participantes);
+			}
+		};
+		ajax.open("GET", "participantes", true);
+		ajax.send();
+	}
+
+	function atualizaTabela(participantes) {
+		participantes.forEach(function(participante) {
+			adicionaParticipanteNaTabela(participante);
+		});
+	}
+
+	function adicionaParticipanteNaTabela(participante) {
+		var tr = montaTr(participante);
+		tabela.appendChild(tr);
+	}
+
+	function montaTr(participante) {
+		var tr = document.createElement("tr");
+
+		var nomeTd = montaTd(participante.nome);
+		var cpfTd = montaTd(participante.cpf);
+		var dataTd = montaTd(participante.dataNascimento);
+
+		tr.appendChild(nomeTd);
+		tr.appendChild(cpfTd);
+		tr.appendChild(dataTd);
+		
+		var tdEditar = montaTdControle(participante, "editar");
+		var tdExcluir = montaTdControle(participante, "excluir");
+		
+		tr.appendChild(tdEditar);
+		tr.appendChild(tdExcluir);
+		
+		tr.setAttribute("id", participante.cpf);
+
+		return tr;
+	}
+	
+	function montaTdControle(participante, tipo){
+		var link = document.createElement("a");
+		
+		const params = new URLSearchParams({
+			cpf : participante.cpf,
+			operacao: tipo
+		});
+		
+		link.textContent = tipo;
+		link.setAttribute('href', "participantes?" + params.toString());
+		link.setAttribute('id', participante.cpf);
+		if(tipo == "editar"){
+			link.classList.add("btn-editar");
+		}
+		if(tipo == "excluir"){
+			link.classList.add("btn-excluir");
+		}
+		
+		var tdControle = document.createElement("td");
+		tdControle.appendChild(link);
+		
+		return tdControle;
+	}
+
+	function montaTd(dado) {
+		var td = document.createElement("td");
+		td.textContent = dado;
+		return td;
+	}
+</script>
+
+</html>
