@@ -74,6 +74,7 @@ public class ParticipanteServlet extends HttpServlet{
 			resp.setContentType("application/json");
 			resp.setCharacterEncoding("UTF-8");
 			resp.getWriter().write(gson.toJson(participanteDAO.lista()));
+			
 		} else {
 			String operacao = req.getParameter("operacao");
 			
