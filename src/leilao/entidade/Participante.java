@@ -4,6 +4,7 @@ import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -11,23 +12,26 @@ import javax.persistence.TemporalType;
 public class Participante {
 
 	@Id
-	private String cpf;
+	private long cpf;
 	private String nome;
 	@Temporal(TemporalType.DATE)
 	private Date dataNascimento;
 
+//	@OneToMany
+//	private Lance lance;
+	
 	public Participante() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Participante(String nome, String cpf, Date dataNascimento) {
+	public Participante(String nome, long cpf, Date dataNascimento) {
 		super();
 		this.nome = nome;
 		this.cpf = cpf;
 		this.dataNascimento = dataNascimento;
 	}
 
-	public Participante(String cpf) {
+	public Participante(long cpf) {
 		this.cpf = cpf;
 	}
 
@@ -39,11 +43,11 @@ public class Participante {
 		this.nome = nome;
 	}
 
-	public String getCpf() {
+	public long getCpf() {
 		return cpf;
 	}
 
-	public void setCpf(String cpf) {
+	public void setCpf(long cpf) {
 		this.cpf = cpf;
 	}
 

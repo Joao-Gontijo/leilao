@@ -53,7 +53,7 @@ public class ParticipanteDAO {
 		return qry.getResultList();
 	}
 
-	public Participante get(String cpf) {
-		return em.find(Participante.class, cpf);
+	public Participante get(long l) {
+		return em.find(Participante.class, l);
 	}
 }

@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 @Entity
@@ -16,6 +17,7 @@ public class Lance {
 	private double valor;
 
 	@ManyToOne(cascade=CascadeType.PERSIST)
+	@JoinColumn(name = "participante_id")
 	private Participante participante;
 
 	public Lance() {
@@ -55,4 +57,7 @@ public class Lance {
 		this.participante = participante;
 	}
 
+	public long getCPF(Participante participante) {
+		return this.getParticipante().getCpf();
+	}
 }
