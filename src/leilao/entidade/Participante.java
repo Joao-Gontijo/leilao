@@ -16,9 +16,6 @@ public class Participante {
 	private String nome;
 	@Temporal(TemporalType.DATE)
 	private Date dataNascimento;
-
-//	@OneToMany
-//	private Lance lance;
 	
 	public Participante() {
 		// TODO Auto-generated constructor stub
@@ -55,7 +52,7 @@ public class Participante {
 		return dataNascimento;
 	}
 
-	public void setDataNascimento(Date string) {
-		this.dataNascimento = string;
+	public void setDataNascimento(Date dataNascimento) {
+		this.dataNascimento = dataNascimento;
 	}
 }

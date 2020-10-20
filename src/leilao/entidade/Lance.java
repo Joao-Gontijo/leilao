@@ -13,7 +13,7 @@ public class Lance {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+	private long id;
 	private double valor;
 
 	@ManyToOne(cascade=CascadeType.PERSIST)
@@ -21,7 +21,6 @@ public class Lance {
 	private Participante participante;
 
 	public Lance() {
-
 	}
 
 	public Lance(double valor, Participante participante) {
@@ -29,15 +28,15 @@ public class Lance {
 		this.participante = participante;
 	}
 
-	public Lance(double valor) {
-		this.valor = valor;
-	}
+//	public Lance(double valor) {
+//		this.valor = valor;
+//	}
 
-	public int getId() {
+	public long getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 
