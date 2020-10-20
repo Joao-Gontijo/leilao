@@ -1,12 +1,18 @@
 package leilao.entidade;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
 @Entity
@@ -14,10 +20,16 @@ public class Leilao {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	private long id;
 	
-//	private String descricao, dataCriacao, situacao;
-//	private double valorInicial, valorArremate;
+	private String descricao;
+	
+	@Temporal(TemporalType.DATE)
+	private Date dataCriacao;
+	
+	@ManyToOne(cascade = CascadeType.PERSIST)
+	@JoinColumn(name = "lance_id")
+	private Lance lance;
 	
 	@Transient
 	private List<Lance> lances = new ArrayList<Lance>();
@@ -25,12 +37,13 @@ public class Leilao {
 	private Lance maiorLance = null;
 
 	public Leilao() {
-		// TODO Auto-generated constructor stub
 	}
 
-	public Leilao(Long id) {
+	public Leilao(Lance lance, String descricao, Date dataCriacao) {
 		super();
-		this.id = id;
+		this.lance = lance;
+		this.descricao = descricao;
+		this.dataCriacao = dataCriacao;
 	}
 
 	public double calculaValorLance(double valorLance, double taxa) {
@@ -58,7 +71,15 @@ public class Leilao {
 		}
 		return maiorLance;
 	}
-
+	
+	public Date getDataCriacao() {
+		return dataCriacao;
+	}
+	
+	public void setDataCriacao(Date dataCriacao) {
+		this.dataCriacao = dataCriacao;
+	}
+	
 	public Long getId() {
 		return id;
 	}
@@ -67,5 +88,23 @@ public class Leilao {
 		this.id = id;
 	}
 
-}
+	public String getDescricao() {
+		return descricao;
+	}
 
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
+	}
+
+	public Lance getLance() {
+		return lance;
+	}
+	
+	public void setLance(Lance lance) {
+		this.lance = lance;
+	}
+	
+	public long getIdLance(Lance lance) {
+		return this.getLance().getId();
+	}
+}
