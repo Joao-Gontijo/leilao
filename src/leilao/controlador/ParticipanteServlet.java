@@ -40,8 +40,8 @@ public class ParticipanteServlet extends HttpServlet{
 			e.printStackTrace();
 		}
 		
-		
-		Participante participante = new Participante(nome, cpf, dataNascimento);
+		long cpf2 = Long.parseLong(cpf);
+		Participante participante = new Participante(nome, cpf2, dataNascimento);
 		ParticipanteDAO dao = new ParticipanteDAO();
 		dao.salva(participante);
 		
@@ -70,6 +70,7 @@ public class ParticipanteServlet extends HttpServlet{
 		
 		String cpf = req.getParameter("cpf");
 		
+		long cpf2 = Long.parseLong(cpf);
 		if(cpf == null){
 			resp.setContentType("application/json");
 			resp.setCharacterEncoding("UTF-8");
@@ -79,11 +80,11 @@ public class ParticipanteServlet extends HttpServlet{
 			String operacao = req.getParameter("operacao");
 			
 			if(operacao != null && operacao.equals("excluir")){
-				participanteDAO.exclui(new Participante(cpf));
+				participanteDAO.exclui(new Participante(cpf2));
 				resp.sendRedirect("participante.html");
 			} else {
 				if(req.getParameter("origem")!=null && req.getParameter("origem").equals("cadastro-participante")) {
-					String jsonParticipante = gson.toJson(participanteDAO.get(cpf));
+					String jsonParticipante = gson.toJson(participanteDAO.get(cpf2));
 					resp.setContentType("application/json");
 					resp.getWriter().print(jsonParticipante.toString());
 				}else {
