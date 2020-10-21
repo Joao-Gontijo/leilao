@@ -14,7 +14,7 @@ public class ParticipanteDAO {
 	
 	public ParticipanteDAO() {
 		jpaUtil = new JPAUtil();
-		em = jpaUtil.getEntityManager();
+		em = JPAUtil.getEntityManager();
 	}
 	
 //	public void salva(Participante participante) {
@@ -53,7 +53,7 @@ public class ParticipanteDAO {
 		return qry.getResultList();
 	}
 
-	public Participante get(long l) {
-		return em.find(Participante.class, l);
+	public Participante get(String cpf) {
+		return em.find(Participante.class, cpf);
 	}
 }

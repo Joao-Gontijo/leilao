@@ -12,7 +12,7 @@ import javax.persistence.TemporalType;
 public class Participante {
 
 	@Id
-	private long cpf;
+	private String cpf;
 	private String nome;
 	@Temporal(TemporalType.DATE)
 	private Date dataNascimento;
@@ -21,14 +21,14 @@ public class Participante {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Participante(String nome, long cpf, Date dataNascimento) {
+	public Participante(String nome, String cpf, Date dataNascimento) {
 		super();
 		this.nome = nome;
 		this.cpf = cpf;
 		this.dataNascimento = dataNascimento;
 	}
 
-	public Participante(long cpf) {
+	public Participante(String cpf) {
 		this.cpf = cpf;
 	}
 
@@ -40,11 +40,11 @@ public class Participante {
 		this.nome = nome;
 	}
 
-	public long getCpf() {
+	public String getCpf() {
 		return cpf;
 	}
 
-	public void setCpf(long cpf) {
+	public void setCpf(String cpf) {
 		this.cpf = cpf;
 	}
 
