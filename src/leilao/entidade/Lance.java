@@ -56,7 +56,7 @@ public class Lance {
 		this.participante = participante;
 	}
 
-	public long getCPF(Participante participante) {
+	public String getCPF(Participante participante) {
 		return this.getParticipante().getCpf();
 	}
 }

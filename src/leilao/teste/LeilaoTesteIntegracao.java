@@ -19,7 +19,7 @@ public class LeilaoTesteIntegracao {
 		new JPAUtil();
 		EntityManager em = JPAUtil.getEntityManager();
 		em.getTransaction().begin();
-		em.persist(new Leilao(new Lance(80.0, new Participante("TesteLance1", 212342134, new Date("2000/07/17"))),
+		em.persist(new Leilao(new Lance(80.0, new Participante("TesteLance1", "123", new Date("2000/07/17"))),
 				"Teste 1", new Date("2020/10/19")));
 		em.getTransaction().commit();
 		em.close();
