@@ -6,5 +6,48 @@
 </head>
 <body>
 
+<form action="lances" method="post">
+		<p>Nome <select id="cbx-nome" name="cbx-nome" style="width:300px">
+		
+		</select></p>
+		<p>Valor <input type="text" id="input-cpf" name="input-cpf" size="50" /></p>
+		<p><input type="submit" name="btn-salva" value="salvar" /></p>
+
+	</form>
 </body>
+<script type="text/javascript">
+	
+//		document.getElementById("btnCarregar").onclick = function () {
+//	    	var comboCidades = document.getElementById("cboCidades");
+//		    var opt0 = document.createElement("option");
+//		    
+//		    opt0.value = "0";
+//		    opt0.text = "";
+//		    comboCidades.add(opt0, comboCidades.options[0]);
+//		    }	
+	
+		var cbx = document.querySelector("#cbx-nome");
+	
+	//function requisicaoAjax() {
+		var ajax = new XMLHttpRequest();
+		ajax.responseType="text";
+		ajax.onreadystatechange = function() {
+			if (this.readyState == 4 && this.status == 200) {
+				var participantes = JSON.parse(ajax.responseText);
+				var nomes = participantes.map(n => n.nome);
+				var cpfs = participantes.map(c => c.cpf);
+				console.log(nomes);
+				for(i=0; i<nomes.length; i++){
+					console.log("ok");
+					var opt = document.createElement("option");
+					opt.value = cpfs[i];
+					opt.text = nomes[i];
+					cbx.add(opt, cbx.options[i]);
+				}
+			}
+		};
+		ajax.open("GET", "participantes", true);
+		ajax.send();
+	//}
+</script>
 </html>
