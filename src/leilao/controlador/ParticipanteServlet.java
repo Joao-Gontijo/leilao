@@ -77,7 +77,7 @@ public class ParticipanteServlet extends HttpServlet{
 		} else {
 			String operacao = req.getParameter("operacao");
 			
-			if(operacao != null && operacao.equals("excluir")){
+			if(operacao != null && operacao.equals("Excluir")){
 				participanteDAO.exclui(new Participante(cpf));
 				resp.sendRedirect("participante.html");
 			} else {
