@@ -14,15 +14,8 @@ public class ParticipanteDAO {
 	
 	public ParticipanteDAO() {
 		jpaUtil = new JPAUtil();
-		em = JPAUtil.getEntityManager();
+		em = jpaUtil.getEntityManager();
 	}
-	
-//	public void salva(Participante participante) {
-//		em.getTransaction().begin();
-//		em.persist(participante);
-//		em.getTransaction().commit();
-//		em.close();
-//	}
 
 	public void salva(Participante participante) {
 		em.getTransaction().begin();
@@ -42,6 +35,7 @@ public class ParticipanteDAO {
 	public void exclui(Participante participante) {
 		em.getTransaction().begin();
 		participante = em.find(Participante.class, participante.getCpf());
+		
 		em.remove(participante);
 		em.getTransaction().commit();
 		em.close();

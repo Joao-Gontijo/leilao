@@ -1,10 +1,58 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="ISO-8859-1">
+<meta charset="UTF-8">
 <title>Insert title here</title>
+
 </head>
 <body>
 
+	<h1>CADASTRO DE LEILÃO</h1>
+
+		<form action="leilao" id="form" method="post">
+		
+			<input type="hidden" name="id" id="id" />
+			<p><label> Desrição: </label> <input type="text" id="input-descricao" name="input-descricao" size="30" /></p>
+			<p><label> Data de criação: </label> <input type="date"  id="input-data-criacao" name="input-data-criacao" size="70" /></p>
+			<p><label> Valor Inicial: </label> <input type="text"	id="input-valor-inicial" name="input-valor-inicial" size="30" /></p>
+			<p><label for="situacao"> Situação: </label></p> <select name="situacao" id="situacao">
+					<option value="aberto">Aberto</option>
+					<option value="fechado">Fechado</option>
+				</select>
+				<p><input type="submit" id="btn-salva" name="btn-salva" value="salvar" /></p>
+		</form>
 </body>
-</html>
+
+
+<script>
+	const searchParams = new URLSearchParams(location.search);
+
+	if (searchParams.get('descricao')) {
+
+		var ajax = new XMLHttpRequest();
+		ajax.onreadystatechange = function() {
+			if (this.readyState == 4 && this.status == 200) {
+				var leilao = JSON.parse(ajax.responseText);
+				carregarParticipanteNosCampos(leilao);
+			}
+		};
+		ajax.open("GET", "leilao?descricao=" + searchParams.get('descricao')
+				+ "&origem=cadastro-leilao", true);
+		ajax.send();
+	}
+	
+	function carregarParticipanteNosCampos(leilao){
+		inputDescricao = document.querySelector('#input-descricao');
+		inputDataCricao = document.querySelector('#input-data-criacao');
+		inputValorInicial = document.querySelector('#input-valor-inicial');
+		inputSituacao = document.querySelector('#situacao"');
+		inputId = document.querySelector('#id');
+		
+		inputId.value = leilao.id;
+		inputDescricao.value = leilao.descricao;
+		inputDataCricao.value = leilao.dataCriacao;
+		inputValorInicial.value = leilao.valorInicail;
+		inputSituacao.value = leilao.situacao;	
+	}
+	
+</script>
