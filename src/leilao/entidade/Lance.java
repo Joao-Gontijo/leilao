@@ -1,12 +1,15 @@
 package leilao.entidade;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Transient;
 
 @Entity
 public class Lance {
@@ -16,22 +19,26 @@ public class Lance {
 	private long id;
 	private double valor;
 
-	@ManyToOne(cascade=CascadeType.PERSIST)
+	@ManyToOne(cascade=CascadeType.ALL)
 	@JoinColumn(name = "participante_id")
 	private Participante participante;
 
+	
+	@ManyToOne
+	@JoinColumn(name = "leilao_id")
+	private Leilao leilao;
+	
+	@Transient
+	private String p;
+	
 	public Lance() {
 	}
-
+	
 	public Lance(double valor, Participante participante) {
 		this.valor = valor;
 		this.participante = participante;
 	}
-
-//	public Lance(double valor) {
-//		this.valor = valor;
-//	}
-
+	
 	public long getId() {
 		return id;
 	}
@@ -55,8 +62,8 @@ public class Lance {
 	public void setParticipante(Participante participante) {
 		this.participante = participante;
 	}
-
-	public String getCPF(Participante participante) {
-		return this.getParticipante().getCpf();
-	}
+	
+//	public String getCPF(Participante participante) {
+//		return this.getParticipante().getCpf();
+//	}
 }

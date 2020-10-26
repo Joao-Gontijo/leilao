@@ -18,7 +18,10 @@ public class LanceDAO {
 	}
 	
 	public void salva(Lance lance) {
-		
+		em.getTransaction().begin();
+		em.persist(lance);
+		em.getTransaction().commit();
+		em.close();
 	}
 	
 	public void exclui(Lance lance) {

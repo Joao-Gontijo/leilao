@@ -2,17 +2,24 @@ package leilao.entidade;
 
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 @Entity
 public class Participante {
 
+	
 	@Id
+	@OnDelete(action = OnDeleteAction.CASCADE)
 	private String cpf;
+	
+	@Column(nullable = false)
 	private String nome;
 	@Temporal(TemporalType.DATE)
 	private Date dataNascimento;

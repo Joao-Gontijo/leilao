@@ -12,14 +12,14 @@ import leilao.jpa.util.JPAUtil;
 
 public class LanceTesteIntegracao {
 	
-	@SuppressWarnings("deprecation")
-	@Test 
-	public void deveAdicionarLance() {
-		new JPAUtil();
-		EntityManager em = JPAUtil.getEntityManager();
-		em.getTransaction().begin();
-		em.persist(new Lance(80.0, new Participante("TesteLance1", "212342134", new Date("2000/07/17"))));
-		em.getTransaction().commit();
-		em.close();
-	}
+//	@SuppressWarnings("deprecation")
+//	@Test 
+//	public void deveAdicionarLance() {
+//		new JPAUtil();		
+//		EntityManager em = JPAUtil.getEntityManager();
+//		em.getTransaction().begin();
+//		em.persist(new Lance(150, new Participante("TesteLance3", "67890", new Date("2004/04/14"))));
+//		em.getTransaction().commit();
+//		em.close();
+//	}
 }

@@ -22,55 +22,60 @@ public class Leilao {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	
-	private String descricao;
+	private double valorInicial, valorArremate;
+	
+	private String descricao, situacao;
+	
 	
 	@Temporal(TemporalType.DATE)
 	private Date dataCriacao;
 	
-	@ManyToOne(cascade = CascadeType.PERSIST)
-	@JoinColumn(name = "lance_id")
-	private Lance lance;
 	
-	@Transient
-	private List<Lance> lances = new ArrayList<Lance>();
-	@Transient
-	private Lance maiorLance = null;
+//	@Transient
+//	private List<Lance> lances = new ArrayList<Lance>();
+//	@Transient
+//	private Lance maiorLance = null;
 
 	public Leilao() {
 	}
 
-	public Leilao(Lance lance, String descricao, Date dataCriacao) {
-		super();
-		this.lance = lance;
+	public Leilao(String descricao, Date dataCriacao) {
 		this.descricao = descricao;
 		this.dataCriacao = dataCriacao;
+	}
+	
+	public Leilao(String descricao, Date dataCriacao, double valorInicial, String situacao) {
+		this.descricao = descricao;
+		this.dataCriacao = dataCriacao;
+		this.valorInicial = valorInicial;
+		this.situacao = situacao;
 	}
 
 	public double calculaValorLance(double valorLance, double taxa) {
 		return valorLance + (valorLance * taxa);
 	}
 
-	public void efetuaLance(Lance lance) {
-		lances.add(lance);
-		if (maiorLance == null) {
-			maiorLance = lance;
-		} else {
-			if (maiorLance.getValor() < lance.getValor()) {
-				maiorLance = lance;
-			}
-		}
-	}
-
-	public Lance ultimoLance() {
-		return lances.get(lances.size() - 1);
-	}
-
-	public Lance retornaMaiorLance() {
-		if (maiorLance == null) {
-			return new Lance(0, new Participante());
-		}
-		return maiorLance;
-	}
+//	public void efetuaLance(Lance lance) {
+//		lances.add(lance);
+//		if (maiorLance == null) {
+//			maiorLance = lance;
+//		} else {
+//			if (maiorLance.getValor() < lance.getValor()) {
+//				maiorLance = lance;
+//			}
+//		}
+//	}
+//
+//	public Lance ultimoLance() {
+//		return lances.get(lances.size() - 1);
+//	}
+//
+//	public Lance retornaMaiorLance() {
+//		if (maiorLance == null) {
+//			return new Lance(0, new Participante());
+//		}
+//		return maiorLance;
+//	}
 	
 	public Date getDataCriacao() {
 		return dataCriacao;
@@ -95,16 +100,28 @@ public class Leilao {
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
 	}
+	
+	public double getValorInicial() {
+		return valorInicial;
+	}
 
-	public Lance getLance() {
-		return lance;
+	public void setValorInicial(double valorInicial) {
+		this.valorInicial = valorInicial;
 	}
-	
-	public void setLance(Lance lance) {
-		this.lance = lance;
+
+	public double getValorArremate() {
+		return valorArremate;
 	}
-	
-	public long getIdLance(Lance lance) {
-		return this.getLance().getId();
+
+	public void setValorArremate(double valorArremate) {
+		this.valorArremate = valorArremate;
+	}
+
+	public String getSituacao() {
+		return situacao;
+	}
+
+	public void setSituacao(String situacao) {
+		this.situacao = situacao;
 	}
 }

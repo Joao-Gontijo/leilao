@@ -2,9 +2,137 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Insert title here</title>
+<title>Leiloes</title>
+
 </head>
 <body>
 
+
+<div class="main">
+
+		<nav>
+			<div class="menu">
+				<ul>
+					<li><a href="cadastro-participante.html"> CADASTRO DE PARTICIPANTES </a></li>
+					<li><a href="cadastro-leilao.html"> CADASTRO DE LEILÕES </a></li>
+					<li><a href="participante.html"> LISTA DE PARTICIPANTES </a></li>
+					<li><a href="leilao.html"> LISTA DE LEILÕES </a></li>
+				</ul>
+
+			</div>
+		</nav>
+</div>
+
+
+
+<h1> Lista de leilões </h1>
+	<table>
+		<thead>
+			<tr>
+				<th>DESCRIÇÃO</th>
+				<th>VALOR INICIAL</th>
+				<th> DATA DA CRIAÇÃO </th>
+				<th> VALOR INICIAL </th>
+				<th> VALOR DO ARREMATE </th>
+				<th> SITUAÇÃO</th>
+			</tr>
+		</thead>
+
+		<tbody id="tbl-leilao">
+
+		</tbody>
+	</table>
+
 </body>
+
+<script>
+
+
+var tabela = document.querySelector("#tbl-leilao");
+
+
+requisicaoAjax();
+function requisicaoAjax() {
+	var ajax = new XMLHttpRequest();
+	ajax.responseType="text";
+	ajax.onreadystatechange = function() {
+		if (this.readyState == 4 && this.status == 200) {
+			var leiloes = JSON.parse(ajax.responseText);
+			console.log(leiloes);
+			//atualizaTabela(leiloes);
+		}
+	};
+	ajax.open("GET", "participante", true);
+	ajax.send();
+}
+
+function atualizaTabela(leiloes){
+	leiloes.forEach(function (leilao){
+		adicionaLeilaoNaTabela(leilao);
+	});
+}
+
+function adicionaLeilaoNaTabela(leilao){
+	var tr = montaTr(leilao);
+	tabela.appendChild(tr);
+}
+
+function montaTr(leilao){
+	var tr = document.createElement("tr");
+	
+	var descricaoTd = montaTd(leilao.descricao);
+	var dataCriacaoTd = montaTd(leilao.dataCriacao);
+	var valorInicialTd = montaTd(leilao.valorInicial);
+	var valorArremateTd = montaTd(leilao.valorArremate);
+	var situacaoTd = montaTd(leilao.situacao);
+	
+	tr.appendChild(descricaoTd);
+	tr.appendChild(dataCriacaoTd);
+	tr.appendChild(valorInicialTd);
+	tr.appendChild(valorArremateTd);
+	tr.appendChild(situacaoTd);
+	
+	var tdEditar = montaTdControle(leilao, "Editar");
+	var tdExcluir = montaTdControle(leilao,"Excluir");
+	
+	tr.appendChild(tdEditar);
+	tr.appendChild(tdExcluir);
+
+	
+	tr.setAttribute("id", leilao.id);
+	return tr;
+}
+
+
+function montaTdControle(leilao, tipo){
+	
+	var link = document.createElement("a");
+	const params = new URLSearchParams({
+		descricao: tipo,
+		operacao: tipo
+	});
+	
+	link.textContent = tipo;
+	link.setAttribute('href', "leilao?"+params.toString());
+	link.setAttribute('id', leilao.id);
+	if(tipo == "editar"){
+		link.classList.add("btn-editar");
+	}
+	
+	if(tipo == "excluir"){
+		link.classList.add("btn-excluir");
+	}
+	
+	var tdControle =  document.createElement("td");
+	tdControle.appendChild(link);
+	return tdControle;
+	
+}
+
+function montaTd(dado){
+	var td = document.createElement("td");
+	td.textContent = dado;
+	return td;
+}
+</script>
 </html>
