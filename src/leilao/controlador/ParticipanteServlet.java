@@ -55,11 +55,11 @@ public class ParticipanteServlet extends HttpServlet{
 		return dataParaArmazenar;
 	}
 	
-	public String dataParaMostrar(Date data) {
-		SimpleDateFormat simpleDate = new SimpleDateFormat("dd/MM/yyyy");
-		String dataParaInterface = simpleDate.format(data);
-		return dataParaInterface;
-	}
+//	public String dataParaMostrar(Date data) {
+//		SimpleDateFormat simpleDate = new SimpleDateFormat("dd/MM/yyyy");
+//		String dataParaInterface = simpleDate.format(data);
+//		return dataParaInterface;
+//	}
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
