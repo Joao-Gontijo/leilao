@@ -24,7 +24,7 @@
 </body>
 
 
-<script>
+<script type="text/javascript">
 	const searchParams = new URLSearchParams(location.search);
 
 	if (searchParams.get('descricao')) {
@@ -33,7 +33,7 @@
 		ajax.onreadystatechange = function() {
 			if (this.readyState == 4 && this.status == 200) {
 				var leilao = JSON.parse(ajax.responseText);
-				carregarParticipanteNosCampos(leilao);
+				carregarLeilaoNosCampos(leilao);
 			}
 		};
 		ajax.open("GET", "leilao?descricao=" + searchParams.get('descricao')
@@ -41,11 +41,11 @@
 		ajax.send();
 	}
 	
-	function carregarParticipanteNosCampos(leilao){
+	function carregarLeilaoNosCampos(leilao){
 		inputDescricao = document.querySelector('#input-descricao');
 		inputDataCricao = document.querySelector('#input-data-criacao');
 		inputValorInicial = document.querySelector('#input-valor-inicial');
-		inputSituacao = document.querySelector('#situacao"');
+		inputSituacao = document.querySelector('#situacao');
 		inputId = document.querySelector('#id');
 		
 		inputId.value = leilao.id;

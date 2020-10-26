@@ -51,20 +51,18 @@
 var tabela = document.querySelector("#tbl-leilao");
 
 
-requisicaoAjax();
-function requisicaoAjax() {
+
 	var ajax = new XMLHttpRequest();
 	ajax.responseType="text";
 	ajax.onreadystatechange = function() {
 		if (this.readyState == 4 && this.status == 200) {
 			var leiloes = JSON.parse(ajax.responseText);
 			console.log(leiloes);
-			//atualizaTabela(leiloes);
+			atualizaTabela(leiloes);
 		}
 	};
-	ajax.open("GET", "participante", true);
+	ajax.open("GET", "leilao", true);
 	ajax.send();
-}
 
 function atualizaTabela(leiloes){
 	leiloes.forEach(function (leilao){
@@ -80,16 +78,16 @@ function adicionaLeilaoNaTabela(leilao){
 function montaTr(leilao){
 	var tr = document.createElement("tr");
 	
+	var idTd = montaTd(leilao.id);
 	var descricaoTd = montaTd(leilao.descricao);
 	var dataCriacaoTd = montaTd(leilao.dataCriacao);
 	var valorInicialTd = montaTd(leilao.valorInicial);
-	var valorArremateTd = montaTd(leilao.valorArremate);
 	var situacaoTd = montaTd(leilao.situacao);
 	
+	tr.appendChild(idTd)
 	tr.appendChild(descricaoTd);
 	tr.appendChild(dataCriacaoTd);
 	tr.appendChild(valorInicialTd);
-	tr.appendChild(valorArremateTd);
 	tr.appendChild(situacaoTd);
 	
 	var tdEditar = montaTdControle(leilao, "Editar");
@@ -108,12 +106,13 @@ function montaTdControle(leilao, tipo){
 	
 	var link = document.createElement("a");
 	const params = new URLSearchParams({
-		descricao: tipo,
+		descricao: leilao.descricao,
+		//id : leilao.id,
 		operacao: tipo
 	});
 	
 	link.textContent = tipo;
-	link.setAttribute('href', "leilao?"+params.toString());
+	link.setAttribute('href', "leilao?" + params.toString());
 	link.setAttribute('id', leilao.id);
 	if(tipo == "editar"){
 		link.classList.add("btn-editar");
