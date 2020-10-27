@@ -1,6 +1,6 @@
 package leilao.teste.sistema;
 
-import javax.servlet.annotation.WebServlet;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.After;
 import org.junit.Before;
@@ -9,18 +9,17 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.remote.BrowserType;
 
-public class TesteParticipanteSalvar {
+public class TesteSistemaParticipante {
 	
 	private WebDriver browser;
-	
+
 	@Before
-	public void nome() {
+	public void setup() {
 		System.setProperty("webdriver.chrome.driver", "chromedriver/chromedriver.exe");
 		browser = new ChromeDriver();
 	}
-	
+
 	@After
 	public void end() {
 		browser.close();
@@ -32,17 +31,32 @@ public class TesteParticipanteSalvar {
 		WebElement campoDeNome = browser.findElement(By.name("input-nome"));
 		WebElement campoDeCpf = browser.findElement(By.name("input-cpf"));
 		WebElement campoDeDataNascimento = browser.findElement(By.name("input-dataNascimento"));
-		WebElement inputSalva = browser.findElement(By.name("btn-salva"));
-		campoDeNome.sendKeys("Meu nome");
-		campoDeCpf.sendKeys("00055577788");
-		campoDeDataNascimento.sendKeys("10032020");
-		inputSalva.submit();
+		WebElement botaoSalva = browser.findElement(By.name("btn-salva"));
+		campoDeNome.sendKeys("Teste Sistema 2");
+		campoDeCpf.sendKeys("4567891230"); 	//bug! cpf repetido passa no teste
+											//mas não salva no banco
+		campoDeDataNascimento.sendKeys("05122000");
 		try {
-			Thread.sleep(3000);
+			Thread.sleep(5000);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+		botaoSalva.submit();
+	}
+	
+	@Test
+	public void deveBuscarPorParticipante() {
+		browser.get("http://localhost:8080/leilao/participante.html?");
+		WebElement botaoBuscar = browser.findElement(By.name("btn-buscar"));
+		botaoBuscar.click();
+		try {
+			Thread.sleep(8000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		boolean existe = browser.getPageSource().contains("Editar");
+		assertTrue(existe);
 	}
 }
