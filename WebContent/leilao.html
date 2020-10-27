@@ -5,9 +5,21 @@
 <title>Leiloes</title>
 
 </head>
+
+<style type="text/css">
+table{
+	border-collapse:collapse;
+	border:1px solid black;
+	padding: 10px;
+	text-align: center;
+}
+
+td, th {
+	border:1px solid black;
+	padding: 20px;
+}
+</style>
 <body>
-
-
 <div class="main">
 
 		<nav>
@@ -29,11 +41,10 @@
 	<table>
 		<thead>
 			<tr>
-				<th>DESCRI플O</th>
-				<th>VALOR INICIAL</th>
+				<th> ID</th>
+				<th> DESCRI플O</th>
 				<th> DATA DA CRIA플O </th>
 				<th> VALOR INICIAL </th>
-				<th> VALOR DO ARREMATE </th>
 				<th> SITUA플O</th>
 			</tr>
 		</thead>
@@ -92,9 +103,11 @@ function montaTr(leilao){
 	
 	var tdEditar = montaTdControle(leilao, "Editar");
 	var tdExcluir = montaTdControle(leilao,"Excluir");
+	var tdDarLance = montaTdControle(leilao, "Dar Lance");
 	
 	tr.appendChild(tdEditar);
 	tr.appendChild(tdExcluir);
+	tr.appendChild(tdDarLance);
 
 	
 	tr.setAttribute("id", leilao.id);
@@ -107,19 +120,23 @@ function montaTdControle(leilao, tipo){
 	var link = document.createElement("a");
 	const params = new URLSearchParams({
 		descricao: leilao.descricao,
-		//id : leilao.id,
 		operacao: tipo
 	});
 	
 	link.textContent = tipo;
 	link.setAttribute('href', "leilao?" + params.toString());
 	link.setAttribute('id', leilao.id);
+	
 	if(tipo == "editar"){
 		link.classList.add("btn-editar");
 	}
 	
 	if(tipo == "excluir"){
 		link.classList.add("btn-excluir");
+	}
+	
+	if(tipo == "darLance"){
+		link.classList.add("btn-darLance");
 	}
 	
 	var tdControle =  document.createElement("td");

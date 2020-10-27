@@ -112,7 +112,6 @@ public class LeilaoServlet extends HttpServlet {
 					resp.getWriter().print(jsonLeilao.toString());
 				} else {
 					resp.sendRedirect("cadastro-leilao.html?descricao=" + req.getParameter("descricao"));
-					// resp.sendRedirect("cadastro-leilao.html");
 				}
 			}
 		}
