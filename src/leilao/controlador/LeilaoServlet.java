@@ -29,7 +29,7 @@ public class LeilaoServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
 		Utilitario util = new Utilitario();
-		
+
 		LeilaoDAO ldao = new LeilaoDAO();
 		Leilao leilao = new Leilao();
 
@@ -41,12 +41,11 @@ public class LeilaoServlet extends HttpServlet {
 		String id = null;
 		id = req.getParameter("id");
 
-		
-		System.out.println("ID: "+id);
-		if(util.isNumeric(id)) {
+		System.out.println("ID: " + id);
+		if (util.isNumeric(id)) {
 			leilao.setId(Long.parseLong(id));
 		}
-		
+
 		Date dataCriacao = null;
 		try {
 			dataCriacao = dataParaSalvar(data);
@@ -96,6 +95,8 @@ public class LeilaoServlet extends HttpServlet {
 				}
 				ldao.deleta(leilao);
 				resp.sendRedirect("leilao.html");
+			} else if (operacao != null && operacao.equals("Lance")) {
+				resp.sendRedirect("cadastro-lance.html");
 			} else {
 
 				if (req.getParameter("origem") != null && req.getParameter("origem").equals("cadastro-leilao")) {

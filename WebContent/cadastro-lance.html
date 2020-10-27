@@ -7,6 +7,9 @@
 <body>
 <h1>CADASTRO DE LANCE</h1>
 <form action="lances" method="post">
+		<p>Leilão <select id="cbx-leilao" name="cbx-leilao" style="width:300px">
+		
+		</select></p>
 		<p>Nome <select id="cbx-nome" name="cbx-nome" style="width:300px">
 		
 		</select></p>
@@ -18,9 +21,11 @@
 <script type="text/javascript">
 	
 	
-		var cbx = document.querySelector("#cbx-nome");
+	var cbxNome = document.querySelector("#cbx-nome");
+	var cbxLeilao = document.querySelector("#cbx-leilao")
 	
-	//function requisicaoAjax() {
+	requisicaoAjax();
+	function requisicaoAjax() {
 		var ajax = new XMLHttpRequest();
 		ajax.responseType="text";
 		ajax.onreadystatechange = function() {
@@ -28,18 +33,42 @@
 				var participantes = JSON.parse(ajax.responseText);
 				var nomes = participantes.map(n => n.nome);
 				var cpfs = participantes.map(c => c.cpf);
+				
 				console.log(nomes);
 				for(i=0; i<nomes.length; i++){
 					console.log("ok");
 					var opt = document.createElement("option");
 					opt.value = cpfs[i];
 					opt.text = nomes[i];
-					cbx.add(opt, cbx.options[i]);
+					cbxNome.add(opt, cbxNome.options[i]);
 				}
 			}
 		};
 		ajax.open("GET", "participantes", true);
 		ajax.send();
-	//}
+	}
+	
+	preencheCbxLeilao();
+	function preencheCbxLeilao(){
+		var ajax = new XMLHttpRequest();
+		ajax.responseType="text";
+		ajax.onreadystatechange = function() {
+			if (this.readyState == 4 && this.status == 200) {
+				var leiloes = JSON.parse(ajax.responseText);
+				var descricao = leiloes.map(l => l.descricao);
+				var id = leiloes.map(lId => lId.id);
+				console.log("ok");
+				for(i=0; i<descricao.length; i++){
+					console.log("tá dentro do for");
+					var opt = document.createElement("option");
+					opt.value = id[i];
+					opt.text = descricao[i];
+					cbxLeilao.add(opt, cbxLeilao.options[i]);
+				}
+			}
+		};
+		ajax.open("GET", "leilao", true);
+		ajax.send();
+	}
 </script>
 </html>

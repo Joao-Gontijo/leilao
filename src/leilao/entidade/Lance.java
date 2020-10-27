@@ -17,6 +17,7 @@ public class Lance {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
+	
 	private double valor;
 
 	@ManyToOne(cascade=CascadeType.ALL)
