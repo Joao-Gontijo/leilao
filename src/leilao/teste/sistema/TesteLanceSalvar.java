@@ -1,8 +1,5 @@
 package leilao.teste.sistema;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -11,35 +8,37 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 
-public class TesteLeilaoBuscar {
-	
+public class TesteLanceSalvar {
 	private WebDriver browser;
-
+	
 	@Before
 	public void setup() {
 		System.setProperty("webdriver.chrome.driver", "chromedriver/chromedriver.exe");
 		browser = new ChromeDriver();
 	}
-
+	
 	@After
 	public void end() {
 		browser.close();
 	}
 	
 	@Test
-	public void deveBuscarLeilao() {
-		browser.get("http://localhost:8080/leilao/leilao.html");
-		WebElement botaoBuscar = browser.findElement(By.name("btn-buscar"));
-		botaoBuscar.click();
+	public void deveSalvarLance() {
+		browser.get("http://localhost:8080/leilao/cadastro-lance.html");
+		WebElement comboBoxLeilao = browser.findElement(By.name("cbx-leilao"));
+		WebElement comboBoxParticipante = browser.findElement(By.name("cbx-nome"));
+		WebElement campoValor = browser.findElement(By.name("input-valor"));
+		WebElement botaoSalvar = browser.findElement(By.name("btn-salva"));
+		
+		comboBoxLeilao.sendKeys("Nintendo");
+		comboBoxParticipante.sendKeys("Meu nome");
+		campoValor.sendKeys("55");
 		try {
 			Thread.sleep(3000);
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
 		}
-		boolean existe = browser.getPageSource().contains("Editar");
-		assertTrue(existe);
+		botaoSalvar.click();
 	}
-	
-
 }

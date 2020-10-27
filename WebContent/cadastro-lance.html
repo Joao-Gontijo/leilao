@@ -10,7 +10,7 @@
 		<p>Leilão <select id="cbx-leilao" name="cbx-leilao" style="width:300px">
 		
 		</select></p>
-		<p>Nome <select id="cbx-nome" name="cbx-nome" style="width:300px">
+		<p>Participante <select id="cbx-nome" name="cbx-nome" style="width:300px">
 		
 		</select></p>
 		<p>Valor <input type="text" id="input-valor" name="input-valor" size="50" /></p>
@@ -34,9 +34,7 @@
 				var nomes = participantes.map(n => n.nome);
 				var cpfs = participantes.map(c => c.cpf);
 				
-				console.log(nomes);
 				for(i=0; i<nomes.length; i++){
-					console.log("ok");
 					var opt = document.createElement("option");
 					opt.value = cpfs[i];
 					opt.text = nomes[i];
@@ -57,9 +55,8 @@
 				var leiloes = JSON.parse(ajax.responseText);
 				var descricao = leiloes.map(l => l.descricao);
 				var id = leiloes.map(lId => lId.id);
-				console.log("ok");
+				
 				for(i=0; i<descricao.length; i++){
-					console.log("tá dentro do for");
 					var opt = document.createElement("option");
 					opt.value = id[i];
 					opt.text = descricao[i];

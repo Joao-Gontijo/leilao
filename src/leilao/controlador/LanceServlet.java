@@ -12,8 +12,11 @@ import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 
 import leilao.entidade.Lance;
+import leilao.entidade.Leilao;
 import leilao.entidade.Participante;
 import leilao.services.LanceDAO;
+import leilao.services.LeilaoDAO;
+import leilao.services.ParticipanteDAO;
 
 @WebServlet(urlPatterns = "/lances")
 public class LanceServlet extends HttpServlet{
@@ -37,22 +40,38 @@ public class LanceServlet extends HttpServlet{
 	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-//		Participante participante = new Participante();
-//		
-//		String cpf = req.getParameter("cbx-nome");
-//		String valor = req.getParameter("input-valor");
-//		
-//		System.out.println(cpf);
-//		System.out.println(valor);
-//	
-//		double valor2 = Double.parseDouble(valor);
-//		Lance lance = new Lance();
-//		lance.setValor(valor2);
-//		lance.setParticipante(participante.setCpf(cpf));
-//		LanceDAO dao = new LanceDAO();
-//		
-//		dao.salva(lance);
-//		
-//		resp.sendRedirect("home");
+		Participante participante = new Participante();
+		ParticipanteDAO participanteDao = new ParticipanteDAO();
+		
+		Leilao leilao = new Leilao();
+		LeilaoDAO leilaoDao = new LeilaoDAO();
+		
+		Lance lance = new Lance();
+		LanceDAO lanceDao = new LanceDAO();
+		
+		String idLeilao = req.getParameter("cbx-leilao");
+		String idParticipante = req.getParameter("cbx-nome");
+		String valor = req.getParameter("input-valor");
+		
+		System.out.println(idParticipante);
+		System.out.println(valor);
+		System.out.println(idLeilao);
+	
+		leilao = leilaoDao.getLeilao(Long.parseLong(idLeilao));
+		participante = participanteDao.get(idParticipante);
+		
+		
+		
+		leilaoDao.salvar(leilao);
+		participanteDao.salva(participante);
+		
+		
+		lance.setLeilao(leilao);
+		lance.setParticipante(participante);
+		lance.setValor(Double.parseDouble(valor));
+		lanceDao.salva(lance);
+		
+		resp.sendRedirect("home");
+		
 	}
 }
