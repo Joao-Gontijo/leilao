@@ -1,10 +1,13 @@
 package leilao.controlador;
 
 import java.io.IOException;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 //import java.util.List;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -19,7 +22,7 @@ import leilao.entidade.Participante;
 import leilao.services.ParticipanteDAO;
 
 @WebServlet(urlPatterns = "/participantes")
-public class ParticipanteServlet extends HttpServlet{
+public class ParticipanteServlet extends HttpServlet {
 
 	/**
 	 * 
@@ -43,18 +46,17 @@ public class ParticipanteServlet extends HttpServlet{
 		Participante participante = new Participante(nome, cpf, dataNascimento);
 		ParticipanteDAO dao = new ParticipanteDAO();
 		dao.salva(participante);
-		
 		resp.sendRedirect("participante.html");
 	}
-	
+
 	public Date dataParaSalvar(String dataNascimento) throws ParseException {
-		String data = dataNascimento.replaceAll("-","/");
+		String data = dataNascimento.replaceAll("-", "/");
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy/MM/dd");
 		java.util.Date dataConvertida = simpleDateFormat.parse(data);
 		java.sql.Date dataParaArmazenar = new java.sql.Date(dataConvertida.getTime());
 		return dataParaArmazenar;
 	}
-	
+
 //	public String dataParaMostrar(Date data) {
 //		SimpleDateFormat simpleDate = new SimpleDateFormat("dd/MM/yyyy");
 //		String dataParaInterface = simpleDate.format(data);
@@ -64,29 +66,29 @@ public class ParticipanteServlet extends HttpServlet{
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		ParticipanteDAO participanteDAO = new ParticipanteDAO();
-		
+
 		Gson gson = new Gson();
-		
+
 		String cpf = req.getParameter("cpf");
-		
-		if(cpf == null){
+
+		if (cpf == null) {
 			resp.setContentType("application/json");
 			resp.setCharacterEncoding("UTF-8");
 			resp.getWriter().write(gson.toJson(participanteDAO.lista()));
-			
+
 		} else {
 			String operacao = req.getParameter("operacao");
-			
-			if(operacao != null && operacao.equals("Excluir")){
+
+			if (operacao != null && operacao.equals("Excluir")) {
 				participanteDAO.exclui(new Participante(cpf));
 				resp.sendRedirect("participante.html");
 			} else {
-				if(req.getParameter("origem")!=null && req.getParameter("origem").equals("cadastro-participante")) {
+				if (req.getParameter("origem") != null && req.getParameter("origem").equals("cadastro-participante")) {
 					String jsonParticipante = gson.toJson(participanteDAO.get(cpf));
 					resp.setContentType("application/json");
 					resp.getWriter().print(jsonParticipante.toString());
-				}else {
-					resp.sendRedirect("cadastro-participante.html?cpf="+req.getParameter("cpf"));
+				} else {
+					resp.sendRedirect("cadastro-participante.html?cpf=" + req.getParameter("cpf"));
 				}
 			}
 		}

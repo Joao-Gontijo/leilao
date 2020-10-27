@@ -35,7 +35,7 @@ td, th {
 		</nav>
 </div>
 
-
+<p><input type="button" name="btn-buscar" value="Buscar" onclick="requisicaoAjax()" /></p>
 
 <h1> Lista de leilões </h1>
 	<table>
@@ -62,7 +62,7 @@ td, th {
 var tabela = document.querySelector("#tbl-leilao");
 
 
-
+function requisicaoAjax(){
 	var ajax = new XMLHttpRequest();
 	ajax.responseType="text";
 	ajax.onreadystatechange = function() {
@@ -74,6 +74,8 @@ var tabela = document.querySelector("#tbl-leilao");
 	};
 	ajax.open("GET", "leilao", true);
 	ajax.send();
+}
+	
 
 function atualizaTabela(leiloes){
 	leiloes.forEach(function (leilao){

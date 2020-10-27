@@ -20,13 +20,11 @@ public class Lance {
 	
 	private double valor;
 
-	@ManyToOne(cascade=CascadeType.ALL)
-	@JoinColumn(name = "participante_id")
+	@ManyToOne
 	private Participante participante;
 
 	
 	@ManyToOne
-	@JoinColumn(name = "leilao_id")
 	private Leilao leilao;
 	
 	@Transient
@@ -64,7 +62,11 @@ public class Lance {
 		this.participante = participante;
 	}
 	
-//	public String getCPF(Participante participante) {
-//		return this.getParticipante().getCpf();
-//	}
+	public Leilao getLeilao() {
+		return leilao;
+	}
+	
+	public void setLeilao(Leilao leilao) {
+		this.leilao = leilao;
+	}
 }
